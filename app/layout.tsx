@@ -1,5 +1,9 @@
+'use client'
+import { ApolloProvider } from '@apollo/client'
 import './globals.css'
 import { Inter } from 'next/font/google'
+import client from './config/apollo-client'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,9 +18,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="h-full bg-white">
-      <body className='h-full'>{children}</body>
+    <html lang="en"
+      className="h-full bg-white"
+    >
 
+      <body className='h-full'>
+        <ApolloProvider client={client}>
+          {children}
+        </ApolloProvider>
+
+      </body>
     </html>
   )
 }
