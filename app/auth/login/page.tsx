@@ -1,19 +1,15 @@
-"use client"
-import Image from 'next/image'
+'use client';
 import { useEffect, useState } from 'react'
-import Form from '../../components/Form';
+import LoginForm from '../../components/LoginForm';
 
-export default function Login() {
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
-    console.log(email);
+const Login = () => {
 
     return (
         <>
-            <Form />
+            <LoginForm />
 
         </>
     )
 }
+
+export default Login

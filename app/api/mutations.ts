@@ -10,3 +10,18 @@ mutation signup($signUpInput: SignUpInput!) {
     }
 }
 `;
+
+export const LOGIN_MUTATION = gql`
+  mutation login($loginInput: LoginInput!) {
+    login(loginInput: $loginInput) {
+      token
+      user{
+        id
+        email
+        password
+        name
+      }
+    }
+  }
+`
+

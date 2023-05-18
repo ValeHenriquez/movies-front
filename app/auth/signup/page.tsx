@@ -1,3 +1,4 @@
+
 import SignUpForm from "@/app/components/SignUpForm"
 
 const SignUp = () => {
