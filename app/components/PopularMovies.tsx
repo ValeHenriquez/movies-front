@@ -19,6 +19,16 @@ const PopularMovies = ({ popularMovies }: { popularMovies: any }) => {
                     <MovieCard key={movie.id} movie={movie} />
                 ))}
             </div>
+            <div className="grid grid-cols-4 mt-4 gap-4">
+                {popularMovies.slice(4, 8).map((movie: IMovieCard) => (
+                    <MovieCard key={movie.id} movie={movie} />
+                ))}
+            </div>
+            <div className="grid grid-cols-4 mt-4 gap-4">
+                {popularMovies.slice(8, 12).map((movie: IMovieCard) => (
+                    <MovieCard key={movie.id} movie={movie} />
+                ))}
+            </div>
         </div>
     );
 };

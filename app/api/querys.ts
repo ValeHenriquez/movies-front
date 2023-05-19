@@ -5,8 +5,9 @@ export const GET_MOVIES = gql`
         movies{
         id
         title
-        backdrop_path
-        popularity
+        poster_path
+        vote_average
         }
     }
 `;
+
