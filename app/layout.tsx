@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const isBrowser = typeof window !== 'undefined';
-  const showSideBar = isBrowser && !window.location.pathname.includes('/login');
+  const showSideBar = isBrowser && !window.location.pathname.includes('/login') && !window.location.pathname.includes('/signup');
 
   return (
     <html lang="en"
