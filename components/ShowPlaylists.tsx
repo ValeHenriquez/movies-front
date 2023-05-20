@@ -10,78 +10,12 @@ import Image from "next/image";
 import { QueueListIcon, MinusCircleIcon, PlayCircleIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import PlaylistForm from "./PlaylistForm";
+import { Playlist } from "@/config/interfaces";
 
-interface Playlist {
-    id: number;
-    title: string;
-    description: string;
-    img?: string;
-    movies?: number;
-
-}
 
 const ShowPlaylists = () => {
     const [hoveredCard, setHoveredCard] = useState<number>();
-    const [playlists, setPlaylists] = useState<Playlist[]>([
-        {
-            id: 1,
-            title: "Playlist 1",
-            description: "This is the first playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 5
-        },
-        {
-            id: 2,
-            title: "Playlist 2",
-            description: "This is the second playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 10
-        },
-        {
-            id: 3,
-            title: "Playlist 3",
-            description: "This is the third playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 15
-        },
-        {
-            id: 4,
-            title: "Playlist 4",
-            description: "This is the fourth playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 20
-        },
-        {
-            id: 5,
-            title: "Playlist 1",
-            description: "This is the first playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 5
-        },
-        {
-            id: 6,
-            title: "Playlist 2",
-            description: "This is the second playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 10
-        },
-        {
-            id: 7,
-            title: "Playlist 3",
-            description: "This is the third playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 15
-        },
-        {
-            id: 8,
-            title: "Playlist 4",
-            description: "This is the fourth playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 20
-        },
-    ]
-
-    );
+    const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [showForm, setShowForm] = useState(false);
     const handleCardMouseEnter = (id: number) => {
         setHoveredCard(id);
@@ -96,18 +30,10 @@ const ShowPlaylists = () => {
         setPlaylists(newPlaylists);
     }
 
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const newPlaylist = {
-            id: playlists.length + 1,
-            title: e.currentTarget.title.valueOf(),
-            description: e.currentTarget.description.value,
-            img: e.currentTarget.img.value,
-            movies: 0
-        };
-        setPlaylists([...playlists, newPlaylist]);
-        setShowForm(false);
-    };
+    const handleSavePlaylist = (playlist: Playlist) => {
+        const newPlaylists = [...playlists, playlist];
+        setPlaylists(newPlaylists);
+    }
 
     const handleAddPlaylistClick = () => {
         setShowForm(true);
@@ -134,7 +60,7 @@ const ShowPlaylists = () => {
                     >
                         <CardHeader>
                             <div className="relative rounded-lg">
-                                <Image src={playlist.img!} alt="playlist" width={200} height={300} />
+                                <Image src={playlist.movies[0].backdrop_path} alt="playlist" width={200} height={300} />
                                 <div className="absolute top-0 right-0 h-full bg-black bg-opacity-50 flex items-center p-2">
                                     <Typography color="blue-gray" className="text-white font-normal" variant="h5">
                                         {playlist.movies} movies
@@ -166,7 +92,7 @@ const ShowPlaylists = () => {
             }
             {
                 showForm && (
-                    <PlaylistForm handleFormSubmit={handleFormSubmit} setShowForm={setShowForm} />
+                    <PlaylistForm handleSavePlaylist={handleSavePlaylist} setShowForm={setShowForm} />
                 )
             }
         </div >
