@@ -1,8 +1,9 @@
 import Link from "next/link";
 import React from "react";
-import MovieCard, { IMovieCard } from "./MovieCard";
+import MovieCard from "./MovieCard";
+import { MovieShortInfo } from "../interfaces";
 
-const PopularMovies = ({ popularMovies }: { popularMovies: any }) => {
+const PopularMovies = ({ popularMovies }: { popularMovies: MovieShortInfo[] }) => {
     return (
         <div className="flex flex-col mb-6">
             <div className="flex justify-between items-center mt-4">
@@ -15,17 +16,17 @@ const PopularMovies = ({ popularMovies }: { popularMovies: any }) => {
                 </Link>
             </div>
             <div className="grid grid-cols-4 mt-4 gap-4">
-                {popularMovies.slice(0, 4).map((movie: IMovieCard) => (
+                {popularMovies.slice(0, 4).map((movie: MovieShortInfo) => (
                     <MovieCard key={movie.id} movie={movie} />
                 ))}
             </div>
             <div className="grid grid-cols-4 mt-4 gap-4">
-                {popularMovies.slice(4, 8).map((movie: IMovieCard) => (
+                {popularMovies.slice(4, 8).map((movie: MovieShortInfo) => (
                     <MovieCard key={movie.id} movie={movie} />
                 ))}
             </div>
             <div className="grid grid-cols-4 mt-4 gap-4">
-                {popularMovies.slice(8, 12).map((movie: IMovieCard) => (
+                {popularMovies.slice(8, 12).map((movie: MovieShortInfo) => (
                     <MovieCard key={movie.id} movie={movie} />
                 ))}
             </div>
