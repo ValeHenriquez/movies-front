@@ -63,7 +63,7 @@ const ShowPlaylists = () => {
                                 <Image src={playlist.movies[0].backdrop_path} alt="playlist" width={200} height={300} />
                                 <div className="absolute top-0 right-0 h-full bg-black bg-opacity-50 flex items-center p-2">
                                     <Typography color="blue-gray" className="text-white font-normal" variant="h5">
-                                        {playlist.movies} movies
+                                        {playlist.movies.length} movies
                                     </Typography>
                                     <QueueListIcon className="h-5 w-5 ml-2 text-white" />
                                 </div>
