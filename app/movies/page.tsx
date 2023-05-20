@@ -1,8 +1,8 @@
 "use client"
 import { useLazyQuery, useQuery } from "@apollo/client";
-import { GET_MOVIES } from "../api/querys";
-import MovieCard from "../components/MovieCard";
-import { MovieShortInfo } from '../interfaces';
+import { GET_MOVIES } from "../../graphql/querys";
+import MovieCard from "../../components/MovieCard";
+import { MovieShortInfo } from '../../config/interfaces';
 import React, { useEffect, useState } from "react";
 
 
