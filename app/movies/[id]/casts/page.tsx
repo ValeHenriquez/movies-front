@@ -7,7 +7,7 @@ import CastCard from "@/components/CastCard";
 
 
 
-const page = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) => {
+const CastPage = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) => {
 
 
     const [actors, setActors] = useState<Actor[]>([]);
@@ -41,4 +41,4 @@ const page = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) => {
     );
 };
 
-export default page;
+export default CastPage;
