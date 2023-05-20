@@ -116,8 +116,7 @@ const ShowPlaylists = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <Button onClick={handleAddPlaylistClick}
                 className="
-                w-64 h-[200px] bg-gray-100 hover:bg-gray-500
-                "
+                w-64 h-[200px] bg-gray-100 hover:bg-gray-500 rounded-none"
             >
                 <Card className="bg-transparent">
                     <div className="flex justify-center items-center h-full w-full">
