@@ -1,7 +1,7 @@
-import { EMPTY_MOVIE_URL, IMAGE_URL } from "@/config";
+import { EMPTY_MOVIE_URL, IMAGE_URL } from "@/config/config";
 import Image from "next/image";
 import React from "react";
-import { Actor } from "../interfaces";
+import { Actor } from "../config/interfaces"
 
 
 const CastCard = ({ cast }: { cast: Actor }) => {

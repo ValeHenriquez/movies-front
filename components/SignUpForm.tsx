@@ -1,7 +1,7 @@
 'use client';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, gql } from '@apollo/client';
-import { SIGNUP_MUTATION } from "../api/mutations";
+import { SIGNUP_MUTATION } from "../graphql/mutations";
 
 type SignUpFormData = {
     email: string,

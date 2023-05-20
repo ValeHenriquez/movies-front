@@ -1,14 +1,14 @@
-import { EMPTY_MOVIE_URL, IMAGE_URL } from "@/config";
+import { EMPTY_MOVIE_URL, IMAGE_URL } from "@/config/config";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { MovieShortInfo } from "../interfaces";
+import { MovieShortInfo } from "../config/interfaces";
 
 
 const MovieCard = ({ movie }: { movie: MovieShortInfo }) => {
     return (
 
-        <Link href={`/movie/${movie?.id}`} className="w-full flex flex-col">
+        <Link href={`/movies/${movie?.id}`} className="w-full flex flex-col">
 
             <div className="w-full h-[400px] relative">
                 <Image className="rounded-3xl shadow-lg"

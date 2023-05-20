@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, gql } from '@apollo/client';
-import { LOGIN_MUTATION } from "../api/mutations";
+import { LOGIN_MUTATION } from "../graphql/mutations";
 
 type LoginFormData = {
     email: string,

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import MovieCard from "./MovieCard";
-import { MovieShortInfo } from "../interfaces";
+import { MovieShortInfo } from "../config/interfaces";
 
 const PopularMovies = ({ popularMovies }: { popularMovies: MovieShortInfo[] }) => {
     return (
