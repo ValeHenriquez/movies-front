@@ -30,14 +30,14 @@ export default function RootLayout({
     >
 
       <body className='h-full flex flex row'>
-        <Provider store={store}>
-          <ThemeProvider>
+        <ThemeProvider>
+          <Provider store={store}>
             <ApolloProvider client={client}>
               {showSideBar && <SideBar />}
               {children}
             </ApolloProvider>
-          </ThemeProvider>
-        </Provider>
+          </Provider>
+        </ThemeProvider>
 
       </body>
     </html>

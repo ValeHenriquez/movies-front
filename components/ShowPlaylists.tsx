@@ -10,78 +10,13 @@ import Image from "next/image";
 import { QueueListIcon, MinusCircleIcon, PlayCircleIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import PlaylistForm from "./PlaylistForm";
+import { Playlist } from "@/config/interfaces";
+import { EMPTY_MOVIE_URL, IMAGE_URL } from "@/config/config";
 
-interface Playlist {
-    id: number;
-    title: string;
-    description: string;
-    img?: string;
-    movies?: number;
-
-}
 
 const ShowPlaylists = () => {
     const [hoveredCard, setHoveredCard] = useState<number>();
-    const [playlists, setPlaylists] = useState<Playlist[]>([
-        {
-            id: 1,
-            title: "Playlist 1",
-            description: "This is the first playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 5
-        },
-        {
-            id: 2,
-            title: "Playlist 2",
-            description: "This is the second playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 10
-        },
-        {
-            id: 3,
-            title: "Playlist 3",
-            description: "This is the third playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 15
-        },
-        {
-            id: 4,
-            title: "Playlist 4",
-            description: "This is the fourth playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 20
-        },
-        {
-            id: 5,
-            title: "Playlist 1",
-            description: "This is the first playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 5
-        },
-        {
-            id: 6,
-            title: "Playlist 2",
-            description: "This is the second playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 10
-        },
-        {
-            id: 7,
-            title: "Playlist 3",
-            description: "This is the third playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 15
-        },
-        {
-            id: 8,
-            title: "Playlist 4",
-            description: "This is the fourth playlist",
-            img: "https://i.pravatar.cc/300",
-            movies: 20
-        },
-    ]
-
-    );
+    const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [showForm, setShowForm] = useState(false);
     const handleCardMouseEnter = (id: number) => {
         setHoveredCard(id);
@@ -90,38 +25,30 @@ const ShowPlaylists = () => {
     const handleCardMouseLeave = () => {
         setHoveredCard(undefined);
     };
-    //generate a card using material-tailwind/react, show the title and description
 
     const deletePlaylist = (id: number) => {
         const newPlaylists = playlists.filter((playlist) => playlist.id !== id);
         setPlaylists(newPlaylists);
     }
 
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const newPlaylist = {
-            id: playlists.length + 1,
-            title: e.currentTarget.title.valueOf(),
-            description: e.currentTarget.description.value,
-            img: e.currentTarget.img.value,
-            movies: 0
-        };
-        setPlaylists([...playlists, newPlaylist]);
-        setShowForm(false);
-    };
+    const handleSavePlaylist = (playlist: Playlist) => {
+        const newPlaylists = [...playlists, playlist];
+        setPlaylists(newPlaylists);
+    }
 
     const handleAddPlaylistClick = () => {
         setShowForm(true);
     };
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <Button onClick={handleAddPlaylistClick}>
-                <Card className="w-64 bg-transparent">
-                    <CardHeader className="h-48">
-                        <div className="flex justify-center items-center h-full">
-                            <PlusIcon className="h-12 w-12 text-gray-300" />
-                        </div>
-                    </CardHeader>
+            <Button onClick={handleAddPlaylistClick}
+                className="
+                w-64 h-[200px] bg-gray-100 hover:bg-gray-500 rounded-none"
+            >
+                <Card className="bg-transparent">
+                    <div className="flex justify-center items-center h-full w-full">
+                        <PlusIcon className="h-14 w-14 text-gray-300" />
+                    </div>
                 </Card>
             </Button>
             {
@@ -134,10 +61,12 @@ const ShowPlaylists = () => {
                     >
                         <CardHeader>
                             <div className="relative rounded-lg">
-                                <Image src={playlist.img!} alt="playlist" width={200} height={300} />
+                                <Image src={playlist.movies[0].poster_path
+                                    ? `${IMAGE_URL}${playlist.movies[0].poster_path}`
+                                    : `${EMPTY_MOVIE_URL}`} alt="playlist" width={200} height={300} />
                                 <div className="absolute top-0 right-0 h-full bg-black bg-opacity-50 flex items-center p-2">
                                     <Typography color="blue-gray" className="text-white font-normal" variant="h5">
-                                        {playlist.movies} movies
+                                        {playlist.movies.length} movies
                                     </Typography>
                                     <QueueListIcon className="h-5 w-5 ml-2 text-white" />
                                 </div>
@@ -166,7 +95,7 @@ const ShowPlaylists = () => {
             }
             {
                 showForm && (
-                    <PlaylistForm handleFormSubmit={handleFormSubmit} setShowForm={setShowForm} />
+                    <PlaylistForm handleSavePlaylist={handleSavePlaylist} setShowForm={setShowForm} />
                 )
             }
         </div >

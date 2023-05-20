@@ -2,21 +2,29 @@
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { GET_MOVIES } from "../../graphql/querys";
 import MovieCard from "../../components/MovieCard";
-import { MovieShortInfo } from '../../config/interfaces';
+import { Movie, MovieShortInfo } from '../../config/interfaces';
 import React, { useEffect, useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setMovies } from "@/store/slices/movieSlice";
+import { AppState } from "@/store/store";
 
 const Movies = () => {
 
     const [getMovies, { error, loading, data }] = useLazyQuery(GET_MOVIES);
-    const [popularMovies, setPopularMovies] = useState<MovieShortInfo[]>([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         getMovies();
+    }, [data]);
+
+    useEffect(() => {
         if (data) {
-            setPopularMovies(data.movies);
+            dispatch(setMovies(data.movies as Movie[]));
         }
     }, [data]);
+
+    const popularMovies = useSelector((state: AppState) => state.movie.movies);
+    console.log(popularMovies)
 
     return (
         <main className="mt-5 flex flex-col">
