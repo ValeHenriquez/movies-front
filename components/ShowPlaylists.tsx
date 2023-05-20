@@ -11,6 +11,7 @@ import { QueueListIcon, MinusCircleIcon, PlayCircleIcon, PlusIcon } from "@heroi
 import { useState } from "react";
 import PlaylistForm from "./PlaylistForm";
 import { Playlist } from "@/config/interfaces";
+import { EMPTY_MOVIE_URL, IMAGE_URL } from "@/config/config";
 
 
 const ShowPlaylists = () => {
@@ -60,7 +61,9 @@ const ShowPlaylists = () => {
                     >
                         <CardHeader>
                             <div className="relative rounded-lg">
-                                <Image src={playlist.movies[0].backdrop_path} alt="playlist" width={200} height={300} />
+                                <Image src={playlist.movies[0].poster_path
+                                    ? `${IMAGE_URL}${playlist.movies[0].poster_path}`
+                                    : `${EMPTY_MOVIE_URL}`} alt="playlist" width={200} height={300} />
                                 <div className="absolute top-0 right-0 h-full bg-black bg-opacity-50 flex items-center p-2">
                                     <Typography color="blue-gray" className="text-white font-normal" variant="h5">
                                         {playlist.movies.length} movies
