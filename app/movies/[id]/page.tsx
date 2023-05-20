@@ -10,7 +10,7 @@ import { GET_MOVIE_ID } from "@/graphql/querys";
 import CastCard from "@/components/CastCard";
 
 
-const page = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) => {
+const MovieId = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) => {
 
     const [movie, setMovie] = useState<Movie>();
 
@@ -98,4 +98,4 @@ const page = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) => {
     );
 };
 
-export default page;
+export default MovieId;
