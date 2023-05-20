@@ -2,19 +2,16 @@ import { EMPTY_MOVIE_URL, IMAGE_URL } from "@/config";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { MovieShortInfo } from "../interfaces";
 
-export interface IMovieCard {
-    id: number;
-    title: string;
-    poster_path: string;
-    vote_average: number;
-}
 
-const MovieCard = ({ movie }: { movie: IMovieCard }) => {
+const MovieCard = ({ movie }: { movie: MovieShortInfo }) => {
     return (
+
         <Link href={`/movie/${movie?.id}`} className="w-full flex flex-col">
+
             <div className="w-full h-[400px] relative">
-                <Image
+                <Image className="rounded-3xl shadow-lg"
                     src={
                         movie?.poster_path
                             ? `${IMAGE_URL}${movie?.poster_path}`
