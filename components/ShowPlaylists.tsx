@@ -90,7 +90,6 @@ const ShowPlaylists = () => {
     const handleCardMouseLeave = () => {
         setHoveredCard(undefined);
     };
-    //generate a card using material-tailwind/react, show the title and description
 
     const deletePlaylist = (id: number) => {
         const newPlaylists = playlists.filter((playlist) => playlist.id !== id);
@@ -115,13 +114,15 @@ const ShowPlaylists = () => {
     };
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <Button onClick={handleAddPlaylistClick}>
-                <Card className="w-64 bg-transparent">
-                    <CardHeader className="h-48">
-                        <div className="flex justify-center items-center h-full">
-                            <PlusIcon className="h-12 w-12 text-gray-300" />
-                        </div>
-                    </CardHeader>
+            <Button onClick={handleAddPlaylistClick}
+                className="
+                w-64 h-[200px] bg-gray-100 hover:bg-gray-500
+                "
+            >
+                <Card className="bg-transparent">
+                    <div className="flex justify-center items-center h-full w-full">
+                        <PlusIcon className="h-14 w-14 text-gray-300" />
+                    </div>
                 </Card>
             </Button>
             {
