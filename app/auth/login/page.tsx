@@ -1,6 +1,7 @@
 'use client';
+import LoginForm from '@/components/LoginForm';
 import { useEffect, useState } from 'react'
-import LoginForm from '../../components/LoginForm';
+
 
 const Login = () => {
 
