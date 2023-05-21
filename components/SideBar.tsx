@@ -90,17 +90,18 @@ const SideBar = () => {
                             </Typography>
                         </Link>
                     </ListItem>
-                    <Accordion
-                        open={open === 1}
-                        icon={
-                            <ChevronDownIcon
-                                strokeWidth={2.5}
-                                className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
-                            />
-                        }
-                    >
-                        <ListItem className="p-0" selected={open === 1}>
-                            <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
+
+                    <ListItem>
+                        <Accordion
+                            open={open === 0}
+                            icon={
+                                <ChevronDownIcon
+                                    strokeWidth={2.5}
+                                    className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
+                                />
+                            }
+                        >
+                            <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-0">
                                 <ListItemPrefix>
                                     <ListBulletIcon className="h-5 w-5 mr-2" />
                                 </ListItemPrefix>
@@ -108,30 +109,31 @@ const SideBar = () => {
                                     My Playlists
                                 </Typography>
                             </AccordionHeader>
-                        </ListItem>
-                        <AccordionBody className="py-1 ">
-                            <List className="p-0">
-                                {
-                                    playlistsNames.map((name, index) => (
-                                        <ListItem key={index}>
-                                            <ListItemPrefix>
-                                                <PlayCircleIcon className="h-3 w-3 mr-2" />
-                                            </ListItemPrefix>
-                                            {name}
-                                        </ListItem>
-                                    ))
-                                }
-                                <ListItem>
-                                    <ListItemPrefix>
-                                    </ListItemPrefix>
-                                    <Link href="/my-playlists">
+                            <AccordionBody className="py-1  ">
+                                <List className="p-0">
+                                    {
+                                        playlistsNames.map((name, index) => (
+                                            <ListItem key={index}>
+                                                <ListItemPrefix>
+                                                    <PlayCircleIcon className="h-3 w-3 mr-2" />
+                                                </ListItemPrefix>
+                                                {name}
+                                            </ListItem>
+                                        ))
+                                    }
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                        </ListItemPrefix>
+                                        <Link href="/my-playlists">
 
-                                        View all playlists
-                                    </Link>
-                                </ListItem>
-                            </List>
-                        </AccordionBody>
-                    </Accordion>
+                                            View all playlists
+                                        </Link>
+                                    </ListItem>
+                                </List>
+                            </AccordionBody>
+                        </Accordion>
+                    </ListItem>
+
 
                     <ListItem>
                         <ListItemPrefix>
@@ -143,16 +145,17 @@ const SideBar = () => {
                             </Typography>
                         </Link>
                     </ListItem>
-                    <ListItem
-                        onClick={handleLogout}
-                        className="absolute bottom-0 mb-4">
-                        <ListItemPrefix>
-                            <PowerIcon className="h-5 w-5 mr-2" />
-                        </ListItemPrefix>
-                        <Typography color="blue-gray" className="mr-auto font-normal" variant="h5">
-                            Log Out
-                        </Typography>
-                    </ListItem>
+
+                    <div className="absolute bottom-0 mb-4">
+                        <ListItem onClick={handleLogout}>
+                            <ListItemPrefix>
+                                <PowerIcon className="h-5 w-5 mr-2" />
+                            </ListItemPrefix>
+                            <Typography color="blue-gray" className="mr-auto font-normal" variant="h5">
+                                Log Out
+                            </Typography>
+                        </ListItem>
+                    </div>
                 </List>
             </Card>
         </>
