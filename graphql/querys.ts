@@ -54,3 +54,13 @@ query getMovieByID($id: Int!) {
   }
 }
 `;
+
+export const GET_PROFILE = gql`
+query profile {
+  profile {
+    name
+		email
+    password
+  }
+}
+`;

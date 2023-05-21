@@ -16,7 +16,6 @@ export const LOGIN_MUTATION = gql`
     login(loginInput: $loginInput) {
       token
       user{
-        id
         email
         password
         name

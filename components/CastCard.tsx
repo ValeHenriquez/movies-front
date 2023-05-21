@@ -7,7 +7,7 @@ import { Actor } from "../config/interfaces"
 const CastCard = ({ cast }: { cast: Actor }) => {
     return (
         <div className="w-full flex flex-col">
-            <div className="w-full h-[400px] relative">
+            <div className="w-[200px] h-[200px] relative">
                 <Image className="rounded-3xl shadow-lg"
                     src={
                         cast?.profile_path

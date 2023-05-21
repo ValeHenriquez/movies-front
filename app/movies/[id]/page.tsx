@@ -8,10 +8,14 @@ import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { GET_MOVIE_ID } from "@/graphql/querys";
 import CastCard from "@/components/CastCard";
+import { useSelector } from "react-redux";
+import { AppState } from "@/store/store";
+import Loading from "@/components/Loading";
+import { notFound } from "next/navigation";
 
 
 const MovieId = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) => {
-
+    const isAuthenticated = useSelector((state: AppState) => state.auth.isAuthenticated);
     const [movie, setMovie] = useState<Movie>();
 
     const { error, loading, data } = useQuery(GET_MOVIE_ID, {
@@ -26,9 +30,13 @@ const MovieId = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) =
         }
     }, [data]);
 
+    if (!isAuthenticated) {
+        notFound();
+    }
 
-    console.log(movie)
-
+    if (loading) {
+        return <Loading />
+    }
     return (
         <main className="mt-5 flex flex-col">
             <div className="w-[1000px] max-w-full px-4 mx-auto">
@@ -76,7 +84,7 @@ const MovieId = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) =
                     </div>
                 </div>
             </div>
-            <div className="w-[1200px] max-w-full px-4 mx-auto">
+            <div className="max-w-full px-4 mx-auto lg:ml-[100px]">
                 <div className="flex flex-col mb-6 mt-6">
                     <div className="flex justify-between items-center mt-4">
                         <h1 className="text-2xl font-medium">Top Cast</h1>
@@ -87,8 +95,8 @@ const MovieId = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) =
                             See all
                         </Link>
                     </div>
-                    <div className="grid grid-cols-4 mt-4 gap-4">
-                        {movie?.actors?.slice(0, 4).map((cast: Actor) => (
+                    <div className="grid grid-cols-5 mt-4 gap-4">
+                        {movie?.actors?.slice(0, 5).map((cast: Actor) => (
                             <CastCard key={cast?.id} cast={cast} />
                         ))}
                     </div>

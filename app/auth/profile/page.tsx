@@ -1,6 +1,39 @@
+"use client"
+import Loading from "@/components/Loading";
+import { User } from "@/config/interfaces";
+import { GET_PROFILE } from "@/graphql/querys";
+import { AppState } from "@/store/store";
+import { useLazyQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { notFound } from "next/navigation";
+
 const ProfilePage = () => {
+    const [user, setUser] = useState<User>();
+    const isAuthenticated = useSelector((state: AppState) => state.auth.isAuthenticated);
+    const token = useSelector((state: AppState) => state.auth.token);
+    const [profile, { error, loading, data }] = useLazyQuery(GET_PROFILE, {
+        context: {
+            headers: {
+                authorization: token ? `Bearer ${token}` : "",
+            },
+        },
+    });
+
+    useEffect(() => {
+        if (token && !user) {
+            profile();
+            setUser(data?.profile);
+        }
+    }, [data]);
+
+    if (!isAuthenticated) {
+        notFound();
+    }
+
     return (
         <main className="mt-5 flex flex-col">
+            {loading && <Loading />}
             <div >
                 <div className="container mx-auto">
                     <div className="inputs w-full max-w-2xl p-6 mx-auto">
@@ -8,8 +41,9 @@ const ProfilePage = () => {
                         <form className="mt-6 border-t border-gray-400 pt-4">
                             <div className='flex flex-wrap -mx-3 mb-6'>
                                 <div className='w-full md:w-full px-3 mb-6'>
-                                    <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' htmlFor='grid-text-1'>email address</label>
-                                    <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' id='grid-text-1' type='text' placeholder='Enter email' required />
+                                    <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' htmlFor='grid-text-1'></label>
+                                    <input value={user?.email}
+                                        className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' id='grid-text-1' type='text' placeholder='Enter email' required />
                                 </div>
                                 <div className='w-full md:w-full px-3 mb-6 '>
                                     <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>password</label>
@@ -49,7 +83,8 @@ const ProfilePage = () => {
                                     <div className="flex items-center justify-between mt-4">
                                         <div className='w-full md:w-1/2 px-3 mb-6'>
                                             <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >first name</label>
-                                            <input className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' type='text' required />
+                                            <input value={user?.name}
+                                                className='appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500' type='text' required />
                                         </div>
                                         <div className='w-full md:w-1/2 px-3 mb-6'>
                                             <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >last name</label>

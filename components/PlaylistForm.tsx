@@ -1,12 +1,10 @@
-import { Button } from "@material-tailwind/react";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { Movie, MovieShortInfo, Playlist } from "@/config/interfaces";
+import { Movie, Playlist } from "@/config/interfaces";
 import { useSelector } from "react-redux";
 import { AppState } from "@/store/store";
 import Image from "next/image";
 import { EMPTY_MOVIE_URL, IMAGE_URL } from "@/config/config";
-
 
 interface Props {
     handleSavePlaylist: (playlist: Playlist) => void;
@@ -69,12 +67,10 @@ const CreatePlaylistForm: React.FC<Props> = (Props) => {
                     <div className="
                         overflow-y-scroll h-[400px]
                     ">
-
-
                         {
                             selectedMovies.map((movie) => {
                                 return <>
-                                    <div className="flex gap-2 items-center mt-3 bg-red">
+                                    <div className="flex gap-2 items-center mt-3 bg-red" key={movie.id}>
                                         <h2 className="text-sm font-medium">{movie?.title}</h2>
                                         <span
                                             className={`flex flex-col p-1 text-white rounded-md ${movie?.vote_average < 5
@@ -105,7 +101,7 @@ const CreatePlaylistForm: React.FC<Props> = (Props) => {
                     ">
                         {movies.map((movie: Movie) => (
                             <div className={`w-full flex flex-col ${selectedMovies.some((m) => m.id === movie.id) ? 'opacity-50' : ''}`}
-
+                                key={movie.id}
                                 onClick={() => handleMovieClick(movie)}
                             >
                                 <div className="w-full h-[200px] relative">

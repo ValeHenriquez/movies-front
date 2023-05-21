@@ -10,7 +10,7 @@ export interface User {
     name: string;
     email: string;
     password: string;
-    playlists: Playlist[];
+    playlists?: Playlist[];
 }
 
 export interface Actor {
@@ -45,4 +45,9 @@ export interface MovieShortInfo {
     title: string;
     poster_path: string;
     vote_average: number;
+}
+
+export interface LoginResponse {
+    user: User;
+    token: string;
 }

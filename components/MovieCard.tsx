@@ -8,9 +8,9 @@ import { MovieShortInfo } from "../config/interfaces";
 const MovieCard = ({ movie }: { movie: MovieShortInfo }) => {
     return (
 
-        <Link href={`/movies/${movie?.id}`} className="w-full flex flex-col">
+        <Link href={`/movies/${movie?.id}`} className="w-3/4 flex flex-col">
 
-            <div className="w-full h-[400px] relative">
+            <div className="w-full relative">
                 <Image className="rounded-3xl shadow-lg"
                     src={
                         movie?.poster_path
@@ -18,10 +18,12 @@ const MovieCard = ({ movie }: { movie: MovieShortInfo }) => {
                             : `${EMPTY_MOVIE_URL}`
                     }
                     alt={movie?.title}
-                    fill={true}
+                    // fill={true}
+                    width={200}
+                    height={200}
                 />
             </div>
-            <div className="flex gap-4 justify-between items-center mt-3 bg-red">
+            <div className="flex  justify-between items-center mt-3 bg-red">
                 <h2 className="text-lg font-medium">{movie?.title}</h2>
                 <span
                     className={`flex flex-col p-2 text-white rounded-md ${movie?.vote_average < 5
