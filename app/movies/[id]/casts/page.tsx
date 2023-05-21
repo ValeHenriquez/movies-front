@@ -37,25 +37,19 @@ const CastPage = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) 
 
 
     return (
-        <main className="mt-5 flex flex-col mb-6">
-            <div className="max-w-full px-4 mx-auto
-                //que ocupe el ancho de la pantalla
-                w-[1600px]
-            ">
+        <main className="mt-5 flex flex-col mb-6 flex-grow">
+            <div className="max-w-full px-4 mx-auto w-full">
                 <div className="flex flex-col mb-6 mt-6">
                     <h1 className="text-2xl font-medium">All Cast</h1>
                 </div>
-                <div className="grid grid-cols-4 mt-4 gap-4
-                    overflow-y-scroll overflow-x-hidden max-h-[calc(100vh-8rem)]
-
-                    scrollbar-hide 
-                ">
+                <div className="grid grid-cols-4 mt-4 gap-4 overflow-y-scroll overflow-x-hidden max-h-[calc(100vh-8rem)] scrollbar-hide">
                     {actors?.map((cast: Actor) => (
                         <CastCard key={cast?.id} cast={cast} />
                     ))}
                 </div>
             </div>
         </main>
+
     );
 };
 

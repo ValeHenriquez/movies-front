@@ -38,8 +38,8 @@ const MovieId = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) =
         return <Loading />
     }
     return (
-        <main className="mt-5 flex flex-col">
-            <div className="w-[1000px] max-w-full px-4 mx-auto">
+        <main className="mt-5 flex flex-col flex-grow">
+            <div className="w-[1000px] max-w-full px-4 mx-auto flex-grow">
                 <div className="flex flex-col mt-6">
                     <div className="flex gap-7">
                         <div className="flex relative">
@@ -84,7 +84,7 @@ const MovieId = ({ params: { id } }: { params: { id: MovieShortInfo["id"] } }) =
                     </div>
                 </div>
             </div>
-            <div className="max-w-full px-4 mx-auto lg:ml-[100px]">
+            <div className="max-w-full px-4 mx-auto flex-grow">
                 <div className="flex flex-col mb-6 mt-6">
                     <div className="flex justify-between items-center mt-4">
                         <h1 className="text-2xl font-medium">Top Cast</h1>
