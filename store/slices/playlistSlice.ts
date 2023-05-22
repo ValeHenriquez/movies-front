@@ -1,37 +1,29 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { AppState } from '../store';
+import { Playlist } from '@/config/interfaces';
 
 interface PlaylistState {
-    playlist: string[];
-    selectedPlaylist: string;
+    playlists: Playlist[];
+    selectedPlaylist: Playlist | null;
 }
 
 const initialState: PlaylistState = {
-    playlist: [],
-    selectedPlaylist: ''
+    playlists: [],
+    selectedPlaylist: null,
 };
 
-interface SavePlayistState {
-    playlist: string[];
-}
-
-interface SaveSelectedPlaylist {
-    selectedPlaylist: string;
-}
 const playlistSlice = createSlice({
     name: 'playlist',
     initialState: initialState,
     reducers: {
-        savePlaylists: (state, action: PayloadAction<SavePlayistState>) => {
-            state.playlist = action.payload.playlist
+        savePlaylists: (state, action: PayloadAction<Playlist[]>) => {
+            state.playlists = action.payload
         },
-        saveSelectedPlaylist: (state, action: PayloadAction<SaveSelectedPlaylist>) => {
-            state.selectedPlaylist = action.payload.selectedPlaylist;
+        saveSelectedPlaylist: (state, action: PayloadAction<Playlist>) => {
+            state.selectedPlaylist = action.payload;
         }
     }
 
 })
 
 export const { savePlaylists, saveSelectedPlaylist } = playlistSlice.actions
-export const selectPlaylist = (state: AppState) => state.playlist.playlist
 export default playlistSlice.reducer;
