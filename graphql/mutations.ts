@@ -24,3 +24,20 @@ export const LOGIN_MUTATION = gql`
   }
 `;
 
+export const CREATE_PLAYLIST_MUTATION = gql`
+mutation addPlaylist($input: CreatePlaylistInput!){
+  addPlaylist(createPlaylistInput: $input){
+    id
+    title
+    description
+  }
+}
+`
+
+export const REMOVE_PLAYLIST_MUTATION = gql`
+mutation removePlaylist($id: String!){
+  removePlaylist(id: $id){
+    id
+  }
+}
+`
