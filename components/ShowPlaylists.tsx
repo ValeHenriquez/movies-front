@@ -12,17 +12,19 @@ import { useEffect, useState } from "react";
 import PlaylistForm from "./PlaylistForm";
 import { Playlist } from "@/config/interfaces";
 import { EMPTY_MOVIE_URL, IMAGE_URL } from "@/config/config";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { AppState } from "@/store/store";
 import { GET_PLAYLIST_USER } from "@/graphql/querys";
 import { CREATE_PLAYLIST_MUTATION, REMOVE_PLAYLIST_MUTATION } from "@/graphql/mutations";
 import { useRouter } from 'next/navigation';
+import { saveSelectedPlaylist } from "@/store/slices/playlistSlice";
 
 const ShowPlaylists = () => {
 
     const token = useSelector((state: AppState) => state.auth.token);
     const router = useRouter();
+    const dispatch = useDispatch();
     const [removePlaylist] = useMutation(REMOVE_PLAYLIST_MUTATION);
 
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
@@ -73,14 +75,11 @@ const ShowPlaylists = () => {
 
         const newPlaylists = playlists.filter((playlist) => playlist.id !== id);
         setPlaylists(newPlaylists);
-
-
-
-
     }
 
-    const handleSeeMovieClick = async (id: number) => {
-        router.push(`/my-playlist/${id}`);
+    const handleSeeMovieClick = (selectedPlaylist: Playlist) => {
+        dispatch(saveSelectedPlaylist(selectedPlaylist as Playlist));
+        return router.push(`/my-playlists/${selectedPlaylist.title}`);
     }
 
     const handleSavePlaylist = (playlist: Playlist) => {
@@ -127,7 +126,7 @@ const ShowPlaylists = () => {
                                     <div className="absolute top-0 right-0 h-full bg-black bg-opacity-70 flex items-center p-2 w-full justify-between">
                                         <Button
                                             className="text-white font-normal flex items-center"
-                                            onClick={() => handleSeeMovieClick(playlist.id)}
+                                            onClick={() => handleSeeMovieClick(playlist)}
                                         >
                                             <PlayCircleIcon className="h-14 w-14" />
                                         </Button>
