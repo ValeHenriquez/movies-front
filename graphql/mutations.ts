@@ -41,3 +41,16 @@ mutation removePlaylist($id: String!){
   }
 }
 `
+
+
+
+export const UPDATE_PLAYLIST_MUTATION = gql`
+mutation updatePlaylist($updatePlaylistInput: UpdatePlaylistInput!){
+  updatePlaylist(updatePlaylistInput: $updatePlaylistInput){
+    id
+    movies{
+      id
+    }
+  }
+}
+`

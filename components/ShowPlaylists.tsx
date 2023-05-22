@@ -19,6 +19,7 @@ import { GET_PLAYLIST_USER } from "@/graphql/querys";
 import { CREATE_PLAYLIST_MUTATION, REMOVE_PLAYLIST_MUTATION } from "@/graphql/mutations";
 import { useRouter } from 'next/navigation';
 import { saveSelectedPlaylist } from "@/store/slices/playlistSlice";
+import EditPlaylistForm from "./PlaylistEditForm";
 
 const ShowPlaylists = () => {
 
@@ -47,6 +48,9 @@ const ShowPlaylists = () => {
     const [hoveredCard, setHoveredCard] = useState<number>();
 
     const [showForm, setShowForm] = useState(false);
+
+    const [showFormEdit, setShowFormEdit] = useState(false);
+
     const handleCardMouseEnter = (id: number) => {
         setHoveredCard(id);
     };
@@ -87,6 +91,21 @@ const ShowPlaylists = () => {
         setPlaylists(newPlaylists);
     }
 
+    const handleEditPlaylist = (editedPlaylist: Playlist) => {
+        const updatedPlaylists = playlists.map(playlist => {
+            if (playlist.id === editedPlaylist.id) {
+                return editedPlaylist;
+            }
+            return playlist;
+        });
+        setPlaylists(updatedPlaylists);
+    }
+
+    const handleEditPlaylistClick = (selectedPlaylist: Playlist) => {
+        dispatch(saveSelectedPlaylist(selectedPlaylist as Playlist));
+        setShowFormEdit(true);
+    }
+
     const handleAddPlaylistClick = () => {
         setShowForm(true);
     };
@@ -124,17 +143,31 @@ const ShowPlaylists = () => {
                                 </div>
                                 {hoveredCard === playlist.id && (
                                     <div className="absolute top-0 right-0 h-full bg-black bg-opacity-70 flex items-center p-2 w-full justify-between">
-                                        <Button
-                                            className="text-white font-normal flex items-center"
-                                            onClick={() => handleSeeMovieClick(playlist)}
-                                        >
-                                            <PlayCircleIcon className="h-14 w-14" />
-                                        </Button>
-                                        <Button
-                                            className="text-white font-normal flex items-center" onClick={() => deletePlaylist(playlist.id)}
-                                        >
-                                            <MinusCircleIcon className="h-14 w-14" />
-                                        </Button>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <Button
+                                                className="text-white font-normal flex items-top"
+                                                onClick={() => handleSeeMovieClick(playlist)}
+                                            >
+                                                <PlayCircleIcon className="h-14 w-14" />
+                                            </Button>
+
+                                            <Button
+                                                className="text-white font-normal flex items-center"
+                                                onClick={() => handleEditPlaylistClick(playlist)}
+                                            >
+                                                <PlusIcon className="h-14 w-14" />
+                                            </Button>
+
+                                            <Button
+                                                className="text-white font-normal flex items-center"
+                                                onClick={() => deletePlaylist(playlist.id)}
+                                            >
+                                                <MinusCircleIcon className="h-14 w-14" />
+                                            </Button>
+
+
+                                        </div>
+
                                     </div>
                                 )}
                             </div>
@@ -149,6 +182,11 @@ const ShowPlaylists = () => {
             {
                 showForm && (
                     <PlaylistForm handleSavePlaylist={handleSavePlaylist} setShowForm={setShowForm} />
+                )
+            }
+            {
+                showFormEdit && (
+                    <EditPlaylistForm handleEditPlaylist={handleEditPlaylist} setShowFormEdit={setShowFormEdit} />
                 )
             }
         </div >
