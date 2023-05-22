@@ -29,7 +29,7 @@ const Movies = () => {
         return <Loading />
     }
     if (!isAuthenticated) {
-        return null
+        notFound();
     }
 
     return (
