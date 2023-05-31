@@ -29,6 +29,7 @@ const ShowPlaylists = () => {
     const [removePlaylist] = useMutation(REMOVE_PLAYLIST_MUTATION);
 
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
+    const [cover, setCover] = useState<string>("");
 
     const [getPlaylists, { error, loading, data }] = useLazyQuery(GET_PLAYLIST_USER, {
         context: {
@@ -132,9 +133,22 @@ const ShowPlaylists = () => {
                     >
                         <CardHeader>
                             <div className="relative rounded-lg">
-                                <Image src={playlist.movies[0].poster_path
-                                    ? `${IMAGE_URL}${playlist.movies[0].poster_path}`
-                                    : `${EMPTY_MOVIE_URL}`} alt="playlist" width={200} height={300} />
+                                {playlist.movies.length > 0 ? (
+                                    <Image
+                                        src={`${IMAGE_URL}${playlist.movies[0].poster_path}`}
+                                        alt="playlist"
+                                        width={200}
+                                        height={300}
+                                    />
+                                ) : (
+                                    <Image
+                                        src={`${EMPTY_MOVIE_URL}`}
+                                        alt="playlist"
+                                        width={200}
+                                        height={300}
+                                    />
+                                )}
+
                                 <div className="absolute top-0 right-0 h-full bg-black bg-opacity-50 flex items-center p-2">
                                     <Typography color="blue-gray" className="text-white font-normal" variant="h5">
                                         {playlist.movies.length} movies
