@@ -31,18 +31,27 @@ const ShowPlaylists = () => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [cover, setCover] = useState<string>("");
 
-    const [getPlaylists, { error, loading, data }] = useLazyQuery(GET_PLAYLIST_USER, {
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : "",
+    const [getPlaylists, { error, loading, data }] = useLazyQuery(
+        GET_PLAYLIST_USER,
+        {
+            context: {
+                headers: {
+                    authorization: token ? `Bearer ${token}` : "",
+                },
             },
-        },
-    });
+            fetchPolicy: "network-only", // Agrega esta opción para forzar la recarga de datos
+        }
+    );
 
     useEffect(() => {
         if (token) {
             getPlaylists();
-            setPlaylists(data?.playlistsByUser);
+        }
+    }, [token]);
+
+    useEffect(() => {
+        if (data && data.playlistsByUser) {
+            setPlaylists(data.playlistsByUser);
         }
     }, [data]);
 
