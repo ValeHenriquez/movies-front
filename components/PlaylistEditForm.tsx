@@ -135,7 +135,7 @@ const EditPlaylistForm: React.FC<Props> = (Props) => {
         <div className="w-[600px] max-w-full px-4 mx-auto">
           <div className="flex flex-col">
             <h1 className="text-2xl font-medium">
-              Delete movies from your playlist
+              Edit movies from your playlist
             </h1>
           </div>
           <div className="grid grid-cols-5 mt-4 gap-4
