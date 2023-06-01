@@ -13,13 +13,11 @@ const Login = () => {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         setLoading(true);
-        setTimeout(() => {
+        if (isAuthenticated) {
+            router.push('/movies');
+        } else {
             setLoading(false);
-            if (isAuthenticated && token) {
-                return router.push('/movies');
-            }
-
-        }, 2000);
+        }
     }, [isAuthenticated, router]);
     if (loading) {
         return <>

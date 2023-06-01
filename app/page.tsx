@@ -3,5 +3,9 @@ import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const router = useRouter();
-  return router.push('/auth/login');
+  router.push('/auth/login');
+  return (
+    <>
+    </>
+  )
 }

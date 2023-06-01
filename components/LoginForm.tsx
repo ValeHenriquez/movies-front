@@ -15,6 +15,7 @@ type LoginFormData = {
 
 const LoginForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
   const { register, handleSubmit, watch, formState: { errors } } = useForm<LoginFormData>();
   const [login] = useMutation(LOGIN_MUTATION);
   const router = useRouter();
@@ -40,6 +41,12 @@ const LoginForm: React.FC = () => {
 
     } catch (error) {
       console.log(error);
+      setLoading(false);
+      setError('Invalid credentials');
+      setTimeout(() => {
+        setError('');
+      }
+        , 3000);
     }
   }
 
@@ -61,7 +68,6 @@ const LoginForm: React.FC = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
               Email address
@@ -107,7 +113,15 @@ const LoginForm: React.FC = () => {
               Sign in
             </button>
           </div>
-
+          {
+            error && (
+              <div className="mt-5 flex w-full justify-center text-white p-2
+                bg-red-500 bg-opacity-50 rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm 
+              ">
+                {error}
+              </div>
+            )
+          }
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{' '}
@@ -115,6 +129,7 @@ const LoginForm: React.FC = () => {
               Sing up
             </a>
           </p>
+
         </div>
 
       </form>
