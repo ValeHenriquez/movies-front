@@ -7,6 +7,7 @@ import { ThemeProvider } from '@material-tailwind/react'
 import { Provider } from 'react-redux'
 import { store } from '@/store/store'
 import SideBar from '@/components/SideBar'
+import { usePathname } from 'next/navigation'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,8 +22,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const isBrowser = typeof window !== 'undefined';
-  const showSideBar = isBrowser && window.location.pathname !== '/login' && window.location.pathname !== '/signup';
+  const pathname = usePathname();
+
+  const showSideBar = pathname !== '/login' && pathname !== '/signup';
 
   return (
     <html lang="en"
