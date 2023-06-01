@@ -2,6 +2,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, gql } from '@apollo/client';
 import { SIGNUP_MUTATION } from "../graphql/mutations";
+import { useRouter } from 'next/navigation'
 
 type SignUpFormData = {
     email: string,
@@ -12,6 +13,7 @@ type SignUpFormData = {
 const SignUpForm: React.FC = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<SignUpFormData>();
     const [signup] = useMutation(SIGNUP_MUTATION);
+    const router = useRouter()
     const handleSignUp: SubmitHandler<SignUpFormData> = async data => {
         try {
             const response = await signup({
@@ -24,7 +26,8 @@ const SignUpForm: React.FC = () => {
                     }
                 }
             })
-            console.log(response.data.signup);
+            router.push('/auth/login')
+
         } catch (error) {
             console.log(error);
         }
