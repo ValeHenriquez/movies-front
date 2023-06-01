@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { AppState } from "@/store/store";
 import { GET_PLAYLIST_USER } from "@/graphql/querys";
-import { CREATE_PLAYLIST_MUTATION, REMOVE_PLAYLIST_MUTATION } from "@/graphql/mutations";
+import { REMOVE_PLAYLIST_MUTATION } from "@/graphql/mutations";
 import { useRouter } from 'next/navigation';
 import { saveSelectedPlaylist } from "@/store/slices/playlistSlice";
 import EditPlaylistForm from "./PlaylistEditForm";
@@ -27,9 +27,11 @@ const ShowPlaylists = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const [removePlaylist] = useMutation(REMOVE_PLAYLIST_MUTATION);
-
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
-    const [cover, setCover] = useState<string>("");
+
+    const [hoveredCard, setHoveredCard] = useState<number>();
+    const [showForm, setShowForm] = useState(false);
+    const [showFormEdit, setShowFormEdit] = useState(false);
 
     const [getPlaylists, { error, loading, data }] = useLazyQuery(
         GET_PLAYLIST_USER,
@@ -39,7 +41,7 @@ const ShowPlaylists = () => {
                     authorization: token ? `Bearer ${token}` : "",
                 },
             },
-            fetchPolicy: "network-only", // Agrega esta opción para forzar la recarga de datos
+            fetchPolicy: "network-only",
         }
     );
 
@@ -55,11 +57,7 @@ const ShowPlaylists = () => {
         }
     }, [data]);
 
-    const [hoveredCard, setHoveredCard] = useState<number>();
 
-    const [showForm, setShowForm] = useState(false);
-
-    const [showFormEdit, setShowFormEdit] = useState(false);
 
     const handleCardMouseEnter = (id: number) => {
         setHoveredCard(id);
@@ -70,8 +68,6 @@ const ShowPlaylists = () => {
     };
 
     const deletePlaylist = async (id: number) => {
-        //ACA DEVUELVE UN ERROR? OSEA DICE QUE NO EXISTE EL ID Y OBVIO SI LO BORRO PERO 
-        //SI O SI HAY QUE DEVOLVE ALGO DESDE LA MUTACION
         try {
             const response = await removePlaylist({
                 context: {
