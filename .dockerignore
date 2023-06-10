@@ -1,0 +1,14 @@
+node_modules
+.gitignore
+dist
+test
+.prettierrc.js
+.dockerignore
+Dockerfile
+docker-compose.yml
+package-lock.json
+README.md
+docs
+.vscode
+.next
+```
