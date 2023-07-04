@@ -1,16 +1,9 @@
-"use client"
 import ShowPlaylists from "@/components/ShowPlaylists";
-import { AppState } from "@/store/store";
-import { notFound } from "next/navigation";
-import { useSelector } from "react-redux";
+import { NextPage } from "next";
 
-const MyPlaylists = () => {
-    const isAuthenticated = useSelector((state: AppState) => state.auth.isAuthenticated);
-    if (!isAuthenticated) {
-        notFound();
-    }
+const MyPlaylists: NextPage = () => {
     return <>
-        <div className="ml-10 mt-10">
+        <div className="mt-10 ml-10">
             <ShowPlaylists />
         </div>
     </>
