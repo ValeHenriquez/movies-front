@@ -8,23 +8,22 @@ import { MovieShortInfo } from "../config/interfaces";
 const MovieCard = ({ movie }: { movie: MovieShortInfo }) => {
     return (
 
-        <Link href={`/movies/${movie?.id}`} className="w-3/4 flex flex-col">
+        <Link href={`/movies/${movie?.id}`} className="flex flex-col w-3/4">
 
-            <div className="w-full relative">
-                <Image className="rounded-3xl shadow-lg"
+            <div className="relative w-full">
+                <Image className="shadow-lg rounded-3xl"
                     src={
                         movie?.poster_path
                             ? `${IMAGE_URL}${movie?.poster_path}`
                             : `${EMPTY_MOVIE_URL}`
                     }
                     alt={movie?.title}
-                    // fill={true}
                     width={200}
                     height={200}
                 />
             </div>
-            <div className="flex  justify-between items-center mt-3 bg-red">
-                <h2 className="text-lg font-medium">{movie?.title}</h2>
+            <div className="flex items-center justify-between mt-3 bg-red">
+                <h2 className="text-lg font-medium text-white ">{movie?.title}</h2>
                 <span
                     className={`flex flex-col p-2 text-white rounded-md ${movie?.vote_average < 5
                         ? `bg-red-700`
