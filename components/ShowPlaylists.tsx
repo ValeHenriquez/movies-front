@@ -10,7 +10,7 @@ import Image from "next/image";
 import { QueueListIcon, MinusCircleIcon, PlayCircleIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import PlaylistForm from "./PlaylistForm";
-import { Playlist } from "@/config/interfaces";
+import { Playlist, User } from "@/config/interfaces";
 import { EMPTY_MOVIE_URL, IMAGE_URL } from "@/config/config";
 import { useDispatch, useSelector } from "react-redux";
 import { useLazyQuery, useMutation } from "@apollo/client";
@@ -24,6 +24,7 @@ import EditPlaylistForm from "./PlaylistEditForm";
 const ShowPlaylists = () => {
 
     const token = useSelector((state: AppState) => state.auth.token);
+    const user: User = useSelector((state: AppState) => state.auth.user) as User;
     const router = useRouter();
     const dispatch = useDispatch();
     const [removePlaylist] = useMutation(REMOVE_PLAYLIST_MUTATION);
@@ -36,10 +37,8 @@ const ShowPlaylists = () => {
     const [getPlaylists, { error, loading, data }] = useLazyQuery(
         GET_PLAYLIST_USER,
         {
-            context: {
-                headers: {
-                    authorization: token ? `Bearer ${token}` : "",
-                },
+            variables: {
+                userId: user.id,
             },
             fetchPolicy: "network-only",
         }

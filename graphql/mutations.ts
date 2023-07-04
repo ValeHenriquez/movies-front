@@ -16,6 +16,7 @@ export const LOGIN_MUTATION = gql`
     login(loginInput: $loginInput) {
       token
       user{
+        id
         email
         password
         name
@@ -25,8 +26,8 @@ export const LOGIN_MUTATION = gql`
 `;
 
 export const CREATE_PLAYLIST_MUTATION = gql`
-mutation addPlaylist($input: CreatePlaylistInput!){
-  addPlaylist(createPlaylistInput: $input){
+mutation addPlaylist($userId: String!,$input: CreatePlaylistInput!){
+  addPlaylist(userId: $userId,createPlaylistInput: $input){
     id
     title
     description

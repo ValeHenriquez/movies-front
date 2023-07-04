@@ -62,8 +62,8 @@ query getMovieByID($id: Int!) {
 `;
 
 export const GET_PROFILE = gql`
-query profile {
-  profile {
+query profile($userId: String!) {
+  profile(userId: $userId) {
     name
 		email
     password
@@ -73,8 +73,8 @@ query profile {
 
 
 export const GET_PLAYLIST_USER = gql`
-query playlistsByUser {
-  playlistsByUser {
+query playlistsByUser($userId: String!) {
+  playlistsByUser(userId: $userId) {
     id
     title
     description
