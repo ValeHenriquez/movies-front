@@ -20,14 +20,14 @@ export default function RootLayout({
 }) {
   const pathname = usePathname();
 
-  const showSideBar = pathname !== '/login' && pathname !== '/signup';
+  const showSideBar = pathname !== '/auth/login' && pathname !== '/auth/signup';
 
   return (
     <html lang="en"
       className="h-full bg-white"
     >
 
-      <body className='h-full flex flex row'>
+      <body className='flex h-full row'>
         <ThemeProvider>
           <Provider store={store}>
             <ApolloProvider client={client}>
