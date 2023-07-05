@@ -9,21 +9,24 @@ import { useSelector } from "react-redux";
 import { notFound } from "next/navigation";
 
 const ProfilePage = () => {
-    const [user, setUser] = useState<User>();
+    //const [user, setUser] = useState<User>();
     const isAuthenticated = useSelector((state: AppState) => state.auth.isAuthenticated);
     const token = useSelector((state: AppState) => state.auth.token);
-    const [profile, { error, loading, data }] = useLazyQuery(GET_PROFILE, {
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : "",
+    const user: User = useSelector((state: AppState) => state.auth.user) as User;
+
+    const [profile, { error, loading, data }] = useLazyQuery(GET_PROFILE,
+        {
+            variables: {
+                userId: user.id,
             },
-        },
-    });
+            fetchPolicy: "network-only",
+        }
+    );
 
     useEffect(() => {
         if (token && !user) {
             profile();
-            setUser(data?.profile);
+            //setUser(data?.profile);
         }
     }, [data]);
 

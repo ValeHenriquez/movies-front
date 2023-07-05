@@ -1,7 +1,7 @@
 'use client';
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { Movie, Playlist } from "@/config/interfaces";
+import { Movie, Playlist, User } from "@/config/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "@/store/store";
 import Image from "next/image";
@@ -25,6 +25,9 @@ const CreatePlaylistForm: React.FC<Props> = (Props) => {
     const dispatch = useDispatch();
     const { skip, take, nextPage, prevPage, disableNext, disablePrev } = usePagination(moviesCount);
     const { searchedMovies, updateMovies, showButtons, hideButtons, showButtonsAgain } = useSearchedMovies();
+
+    //const token = useSelector((state: AppState) => state.auth.token);
+    const user: User = useSelector((state: AppState) => state.auth.user) as User;
     const [createPlaylist] = useMutation(CREATE_PLAYLIST_MUTATION);
 
     const { handleSavePlaylist, setShowForm } = Props;
@@ -42,6 +45,8 @@ const CreatePlaylistForm: React.FC<Props> = (Props) => {
         }
     };
 
+
+
     const savePlaylist = async () => {
         const p: Playlist = {
             id,
@@ -49,15 +54,10 @@ const CreatePlaylistForm: React.FC<Props> = (Props) => {
             description,
             movies: selectedMovies,
         }
-
         try {
             const response = await createPlaylist({
-                context: {
-                    headers: {
-                        authorization: token ? `Bearer ${token}` : "",
-                    },
-                },
                 variables: {
+                    userId: user.id,
                     input: {
                         title: p.title,
                         description: p.description,
@@ -66,7 +66,6 @@ const CreatePlaylistForm: React.FC<Props> = (Props) => {
                 }
             })
             setId(response.data.id);
-            console.log(response);
         } catch (error) {
             console.log(error)
         };
