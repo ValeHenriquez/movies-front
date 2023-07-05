@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import { store } from '@/store/store'
 import SideBar from '@/components/SideBar'
 import { usePathname } from 'next/navigation'
+import { AuthContextProvider } from '@/context/AuthContext'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -31,8 +32,10 @@ export default function RootLayout({
         <ThemeProvider>
           <Provider store={store}>
             <ApolloProvider client={client}>
-              {showSideBar && <SideBar />}
-              {children}
+              <AuthContextProvider>
+                {showSideBar && <SideBar />}
+                {children}
+              </AuthContextProvider>
             </ApolloProvider>
           </Provider>
         </ThemeProvider>

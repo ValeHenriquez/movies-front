@@ -25,8 +25,6 @@ const CreatePlaylistForm: React.FC<Props> = (Props) => {
     const dispatch = useDispatch();
     const { skip, take, nextPage, prevPage, disableNext, disablePrev } = usePagination(moviesCount);
     const { searchedMovies, updateMovies, showButtons, hideButtons, showButtonsAgain } = useSearchedMovies();
-
-    //const token = useSelector((state: AppState) => state.auth.token);
     const user: User = useSelector((state: AppState) => state.auth.user) as User;
     const [createPlaylist] = useMutation(CREATE_PLAYLIST_MUTATION);
 
@@ -56,8 +54,12 @@ const CreatePlaylistForm: React.FC<Props> = (Props) => {
         }
         try {
             const response = await createPlaylist({
+                context: {
+                    headers: {
+                        authorization: token ? `Bearer ${token}` : "",
+                    },
+                },
                 variables: {
-                    userId: user.id,
                     input: {
                         title: p.title,
                         description: p.description,
@@ -72,6 +74,10 @@ const CreatePlaylistForm: React.FC<Props> = (Props) => {
 
         handleSavePlaylist(p);
         setShowForm(false);
+    }
+
+    const disableSavePlaylistButton = () => {
+        return selectedMovies.length === 0 || title === "" || description === "";
     }
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ">
@@ -94,8 +100,10 @@ const CreatePlaylistForm: React.FC<Props> = (Props) => {
 
                         <div className="px-4 py-2 mr-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-300" onClick={() => setShowForm(false)}
                         >Cancel</div>
-                        <div className="px-4 py-2 text-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-300 bg-slate-800"
-                            onClick={savePlaylist}>Add</div>
+                        <button className="px-4 py-2 text-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-300 bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed "
+                            onClick={savePlaylist}
+                            disabled={disableSavePlaylistButton()}
+                        >Add</button>
 
                     </div>
                     <div className="overflow-y-scroll h-[400px]">

@@ -2,6 +2,8 @@
 import React, { useEffect } from 'react'
 import { searchMovies } from '@/config/apollo-client';
 import { Movie } from '@/config/interfaces';
+import { AppState } from '@/store/store';
+import { useSelector } from 'react-redux';
 
 interface Props {
   updateMovies: (movies: Movie[]) => void;
@@ -10,9 +12,9 @@ interface Props {
 }
 export const MoviesNavbar: React.FC<Props> = ({ updateMovies, hideButtons, showButtonsAgain }) => {
   const [query, setQuery] = React.useState('')
-
+  const token = useSelector((state: AppState) => state.auth.token);
   const handleSearch = async () => {
-    const searchResults = await searchMovies(query)
+    const searchResults = await searchMovies(query, token!)
     updateMovies(searchResults)
   }
   useEffect(() => {

@@ -8,9 +8,14 @@ const client = new ApolloClient({
 
 export default client;
 
-export const searchMovies = async (query: string): Promise<Movie[]> => {
+export const searchMovies = async (query: string, token: string): Promise<Movie[]> => {
     try {
         const response = await client.query({
+            context: {
+                headers: {
+                    authorization: token ? `Bearer ${token}` : '',
+                },
+            },
             query: gql`
             query SearchMovies($query: String!) {
               searchMovies(query: $query) {

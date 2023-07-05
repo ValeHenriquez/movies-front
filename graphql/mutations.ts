@@ -26,8 +26,8 @@ export const LOGIN_MUTATION = gql`
 `;
 
 export const CREATE_PLAYLIST_MUTATION = gql`
-mutation addPlaylist($userId: String!,$input: CreatePlaylistInput!){
-  addPlaylist(userId: $userId,createPlaylistInput: $input){
+mutation addPlaylist($input: CreatePlaylistInput!){
+  addPlaylist(createPlaylistInput: $input){
     id
     title
     description

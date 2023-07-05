@@ -27,7 +27,6 @@ interface Props {
 const ShowPlaylists: React.FC<Props> = ({ moviesCount }) => {
 
     const token = useSelector((state: AppState) => state.auth.token);
-    const user: User = useSelector((state: AppState) => state.auth.user) as User;
     const router = useRouter();
     const dispatch = useDispatch();
     dispatch(setMoviesCount(moviesCount));
@@ -42,8 +41,10 @@ const ShowPlaylists: React.FC<Props> = ({ moviesCount }) => {
     const [getPlaylists, { error, loading, data }] = useLazyQuery(
         GET_PLAYLIST_USER,
         {
-            variables: {
-                userId: user.id,
+            context: {
+                headers: {
+                    authorization: token ? `Bearer ${token}` : "",
+                },
             },
             fetchPolicy: "network-only",
         }
