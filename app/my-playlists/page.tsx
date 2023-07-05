@@ -1,18 +1,14 @@
-"use client"
 import ShowPlaylists from "@/components/ShowPlaylists";
-import { AppState } from "@/store/store";
-import { notFound } from "next/navigation";
-import { useSelector } from "react-redux";
+import { GET_MOVIES_COUNT } from "@/graphql/querys";
+import { getClient } from "@/lib/client";
 
-const MyPlaylists = () => {
-    const isAuthenticated = useSelector((state: AppState) => state.auth.isAuthenticated);
-    if (!isAuthenticated) {
-        notFound();
-    }
+const MyPlaylists = async () => {
+    const data = await getClient().query<{ moviesCount: number }>({ query: GET_MOVIES_COUNT });
+
     return <>
-        <div className="ml-10 mt-10">
-            <ShowPlaylists />
-        </div>
+        <ShowPlaylists
+            moviesCount={data.data.moviesCount}
+        />
     </>
 
 }

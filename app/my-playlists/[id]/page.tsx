@@ -13,16 +13,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 const MyPlaylistMovies = () => {
-  const isAuthenticated = useSelector((state: AppState) => state.auth.isAuthenticated);
-  if (!isAuthenticated) {
-    notFound();
-  }
   const selectedPlaylist = useSelector((state: AppState) => state.playlist.selectedPlaylist);
   const movies = selectedPlaylist?.movies
 
   return (
     <>
-      <main className="mt-5 flex flex-col">
+      <main className="flex flex-col mt-5">
         <div className="max-w-full px-4 mx-auto">
           <div className="flex flex-col">
             <h1 className="text-2xl font-medium">Playlist {selectedPlaylist?.title}</h1>
