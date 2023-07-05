@@ -4,23 +4,24 @@ import { searchMovies } from '@/config/apollo-client';
 import { Movie } from '@/config/interfaces';
 
 interface Props {
-  setSearchedMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
-  setShowButtons: React.Dispatch<React.SetStateAction<boolean>>;
+  updateMovies: (movies: Movie[]) => void;
+  hideButtons: () => void;
+  showButtonsAgain: () => void;
 }
-export const MoviesNavbar: React.FC<Props> = ({ setSearchedMovies, setShowButtons }) => {
+export const MoviesNavbar: React.FC<Props> = ({ updateMovies, hideButtons, showButtonsAgain }) => {
   const [query, setQuery] = React.useState('')
 
   const handleSearch = async () => {
     const searchResults = await searchMovies(query)
-    setSearchedMovies(searchResults)
+    updateMovies(searchResults)
   }
   useEffect(() => {
     if (query.length > 4) {
       handleSearch();
-      setShowButtons(false);
+      hideButtons();
     } else {
-      setSearchedMovies([]);
-      setShowButtons(true);
+      updateMovies([]);
+      showButtonsAgain();
     }
   }, [query]);
   return (
@@ -32,7 +33,7 @@ export const MoviesNavbar: React.FC<Props> = ({ setSearchedMovies, setShowButton
           </div>
           <input
             type="text"
-            placeholder="Buscar películas..."
+            placeholder="Search.."
             className="w-1/2 px-4 py-2 text-black mt-4rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             value={query}
             onChange={(e) => setQuery(e.target.value)}

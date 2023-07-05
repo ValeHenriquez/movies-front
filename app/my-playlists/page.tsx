@@ -1,11 +1,14 @@
 import ShowPlaylists from "@/components/ShowPlaylists";
-import { NextPage } from "next";
+import { GET_MOVIES_COUNT } from "@/graphql/querys";
+import { getClient } from "@/lib/client";
 
-const MyPlaylists: NextPage = () => {
+const MyPlaylists = async () => {
+    const data = await getClient().query<{ moviesCount: number }>({ query: GET_MOVIES_COUNT });
+
     return <>
-        <div className="mt-10 ml-10">
-            <ShowPlaylists />
-        </div>
+        <ShowPlaylists
+            moviesCount={data.data.moviesCount}
+        />
     </>
 
 }
